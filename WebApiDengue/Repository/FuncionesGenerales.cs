@@ -1,5 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Dynamic;
+using System.Reflection.Metadata;
 
 namespace WebApiDengue.Repository
 {
@@ -85,5 +87,8 @@ namespace WebApiDengue.Repository
             return resultado;
 
         }
+
+
+         
     }
 }
