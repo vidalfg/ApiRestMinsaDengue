@@ -38,19 +38,19 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 //habilitar para publicar
-//app.UseSwagger();
-//app.UseSwaggerUI(options =>
-//{
-//    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Mi API V1");
-//    options.RoutePrefix = String.Empty;
-//});
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Mi API V1");
+    options.RoutePrefix = String.Empty;
+});
 
 
 app.UseHttpsRedirection();

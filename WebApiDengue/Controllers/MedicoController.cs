@@ -52,27 +52,51 @@ namespace WebApiDengue.Controllers
 
 
         [HttpPost("InserUpdate")]
-        public async Task<IActionResult> InserUpdateDelete([FromBody] ModMedico medico)
+        public async Task<IActionResult> InserUpdate([FromBody] ModMedico medico)
         {
             var jsonString = JsonConvert.SerializeObject(medico) ?? string.Empty;
 
 
             if (_funciones.IsValidJson(jsonString))
             {
-                //var data = JsonConvert.DeserializeObject<dynamic>(jsonString);
-                //var jsonStringData = JsonConvert.SerializeObject(data);
-
                 List<Parameter> parametros = new List<Parameter>
                 {
                     new Parameter("@Data",jsonString),
                 };
 
-                dynamic resultado = await _repFuncionGenerico.Listar("usp_Medico_Listar", parametros, true);
+                dynamic resultado = await _repFuncionGenerico.Listar("usp_Medico_InsertUpdate", parametros, true);
                 return Content(resultado, "application/json");
             }
             else
             {
                 Response<object> errorResponse = new Response<object>(false, 400, "Formato de Json No es valido.", new List<object>());
+                return BadRequest(errorResponse);
+            }
+        }
+
+        [HttpDelete("InserUpdate")]
+        public async Task<IActionResult> Delete(int idMedico = 0,string userAccion ="")
+        {
+            if (idMedico>0)
+            {
+                var dataResult = (new
+                {
+                    idMedico = idMedico,
+                    userAccion = userAccion,
+                }); 
+
+                var jsonStringData = JsonConvert.SerializeObject(dataResult);
+
+                List<Parameter> parametros = new List<Parameter>
+                {
+                    new Parameter("@Data",jsonStringData),
+                };
+                dynamic resultado = await _repFuncionGenerico.Listar("usp_Medico_Delete", parametros, true);
+                return Content(resultado, "application/json");
+            }
+            else
+            {
+                Response<object> errorResponse = new Response<object>(false, 400, "Codigo Invalido.", new List<object>());
                 return BadRequest(errorResponse);
             }
         }
