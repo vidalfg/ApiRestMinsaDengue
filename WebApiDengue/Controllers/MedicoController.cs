@@ -74,7 +74,7 @@ namespace WebApiDengue.Controllers
             }
         }
 
-        [HttpDelete("InserUpdate")]
+        [HttpDelete("eliminar")]
         public async Task<IActionResult> Delete(int idMedico = 0,string userAccion ="")
         {
             if (idMedico>0)
