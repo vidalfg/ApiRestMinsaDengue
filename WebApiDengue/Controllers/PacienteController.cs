@@ -99,6 +99,33 @@ namespace WebApiDengue.Controllers
             }
         }
 
+        [HttpGet("Obetener")]
+        public async Task<IActionResult> Obtener(int idPaciente =0)
+        {
+
+            if (idPaciente > 0)
+            { 
+                var dataResult = (new
+                {
+                    idPaciente = idPaciente
+                });
+
+                var jsonStringData = JsonConvert.SerializeObject(dataResult);
+
+                List<Parameter> parametros = new List<Parameter>
+                {
+                    new Parameter("@Data",jsonStringData),
+                };
+                dynamic resultado = await _repFuncionGenerico.Listar("usp_Paciente_Obtener", parametros, true);
+                return Content(resultado, "application/json");
+            }
+            else
+            {
+                Response<object> errorResponse = new Response<object>(false, 400, "Codigo Invalido.", new List<object>());
+                return BadRequest(errorResponse);
+            }
+        }
+
 
     }
 }
